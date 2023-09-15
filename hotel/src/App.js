@@ -1,12 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
+import Allocateroom from './stellapage/allocatingroom';
 
 function App() {
   return (
-    <div className="App">
-      <h1>welcome to the  React project </h1>
-      <h1>Hostel management poject</h1>
-    </div>
+    <><Allocateroom/></>
   );
 }
 
