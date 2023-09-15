@@ -1,2 +1,16 @@
 .form-control{
     width: 60%; height: 30px; }
+/* .mb-3{
+    width: 60% ;
+} */
+.label-control{
+    color: white;    
+}
+#form{
+    background-color: black;
+}
+.left-aligned-button {
+    align-items: right;
+  }
+
+
