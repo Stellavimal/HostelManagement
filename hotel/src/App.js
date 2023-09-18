@@ -5,8 +5,9 @@ import StudentDetails from './stellapage/Showstudent';
 
 function App() {
   return (
-    // <><Allocateroom/></>
+    //  <><Allocateroom/>
     <StudentDetails/>
+   
   );
 }
 
