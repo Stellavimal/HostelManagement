@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 
 const StudentDetails = () => {
     const [details, setDetails] = useState([])
+    const [newvalue, setNewvalue] = useState([])
+    console.log("newvalues", newvalue)
     // const [newEntry, setNewEntry] = useState({ });
     const [showModal, setShowModal] = useState(false); // pop up wondow
     const [editIndex, setEditIndex] = useState(null);
-    const [monthscal, setMoths] = useState();
     const [input, setInput] = useState({ name: '', Roomtype: ''})
-    const handleEdit = (details, index) => {
 
+    const handleEdit = (details, index) => {
         setEditIndex(index); // Set the index being edited
         setInput({ ...input, name: details.name, Roomtype: details.Roomtype});
-
     };
     // const input = (event) => {
     //     const { name, value } = event.target;
@@ -24,19 +24,19 @@ const StudentDetails = () => {
     function dayscalculate(checkin, checkout) {
         const fromdate = new Date(checkin);
         const todate = new Date(checkout);
-      
+
 
         const year1 = fromdate.getFullYear();
         const year2 = todate.getFullYear();
-      
+
         const month1 = fromdate.getMonth();
         const month2 = todate.getMonth();
-      
+
         const months = (year2 - year1) * 12 + (month2 - month1);
-        // setMoths(months)
         return months;
-      }
-      
+        
+    }
+
     const handleDelete = async (id) => {
         try {
             await axios.delete(`/api/rooms/${id}/`);
@@ -58,7 +58,17 @@ const StudentDetails = () => {
             }
         }
 
+        async function NewData() {
+            try {
+                const response1 = await axios.get('/api/adminlog/');
+                setNewvalue(response1.data);
+                console.log("Kaviya", response1.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
         fetchData();
+        NewData()
     }, [])
 
     const design = {
@@ -128,17 +138,28 @@ const StudentDetails = () => {
                             Room Number
                         </Form.Label>
                         <Col sm="10">
-                            <Form.Control type="text" placeholder="Room Number" required />
+                            <Form.Select required>
+                                <option value="" disabled>Select an option</option>
+                                {newvalue.Room_type === details.Roomtype && (
+                                    newvalue.map(item => (
+                                        <option key={item.Room_NO} value={item.Room_NO}>
+                                            {item.Room_NO}
+                                        </option>
+                                    ))
+                                )}
+                            </Form.Select>
+
+
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextmonth" >
+                    {/* <Form.Group as={Row} className="mb-3" controlId="formPlaintextmonth" >
                         <Form.Label column sm="2" className='label-control'>
-                           Total Months
+                            Total Months
                         </Form.Label>
                         <Col sm="10">
-                            <Form.Control type="text" placeholder="Months" required value={input} />
+                            <Form.Control type="text" placeholder="Months" required  />
                         </Col>
-                    </Form.Group>
+                    </Form.Group> */}
 
 
                 </Form>
@@ -152,8 +173,8 @@ const StudentDetails = () => {
 
             </Modal.Footer>
         </Modal>
-
     </div >);
+
 }
 
 export default StudentDetails;
