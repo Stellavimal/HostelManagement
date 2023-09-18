@@ -11,7 +11,6 @@ import StudentDetails from './stellapage/Showstudent';
 function App() {
   return (
     <>
-    {/* // <><Allocateroom/> */}
     <StudentDetails/>
     <Payment/>
     <Viewpay/>
